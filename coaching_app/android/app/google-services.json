@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "492509930543",
+    "firebase_url": "https://coaching-app-27505.firebaseio.com",
+    "project_id": "coaching-app-27505",
+    "storage_bucket": "coaching-app-27505.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492509930543:android:8dd4dec1f6648633",
+        "android_client_info": {
+          "package_name": "borse.coaching_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492509930543-v6rvp7k8p0526e7on5ck1u815fop739m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "borse.coaching_app",
+            "certificate_hash": "9f33c166c21b724a1f246560fcb57a1dd615c1bc"
+          }
+        },
+        {
+          "client_id": "492509930543-48ha1t7843th0uitpoeo5403780tcvh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNkxK7oSxjlaahSE2ytrS6PYDxHx5mw_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492509930543-48ha1t7843th0uitpoeo5403780tcvh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
