@@ -16,3 +16,11 @@ The application is currently running on a live server.
   <li>Sorting on the basis of Location [comming soon]</li>
   <li>Reviews and rating section [comming soon]</li>
  </ul>
+
+
+<img src="" height="" width="">
+<img src="" height="" width="">
+<img src="" height="" width="">
+<img src="" height="" width="">
+<img src="" height="" width="">
+<img src="" height="" width="">
