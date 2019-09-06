@@ -122,24 +122,32 @@ class _ShowCardState extends State<ShowCard> {
       shape: RoundedRectangleBorder( 
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      child: Container(
-//        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Colors.blue
-        ),
-//        color: Colors.blue,
-        height: 170,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
 
-            Align(
-              alignment: Alignment.bottomCenter,
-                child: DetailsOfInstitute(context,widget.data),
-            ),
-          ],
+        child: Container(
+//        margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.blue
+          ),
+//        color: Colors.blue,
+          height: 170,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+
+          widget.data.pic_url==null?SizedBox(height: 0,)
+              :
+          Image.network(widget.data.pic_url,fit: BoxFit.fill,),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: DetailsOfInstitute(context,widget.data),
+        ),
+
+            ],
+          ),
         ),
       ),
     );

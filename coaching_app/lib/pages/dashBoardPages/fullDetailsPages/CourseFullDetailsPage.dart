@@ -2,6 +2,7 @@ import 'package:coaching_app/model/courseModel.dart';
 import 'package:coaching_app/scoped_models/mainModel.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class CourseFullDetailsPage extends StatefulWidget {
   CourseModel data;
@@ -22,12 +23,12 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-        height: MediaQuery.of(context).size.height+100,
+        height: MediaQuery.of(context).size.height+500,
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
               Align(
-                alignment: Alignment(0,-0.95),
+                alignment: Alignment(0,-0.99),
                 child: Card(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                     elevation: 20,
@@ -40,7 +41,7 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                 ),
               ),
               Align(
-                alignment: Alignment(0,-0.7),
+                alignment: Alignment(0,-0.82),
                 child: Card(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                     elevation: 20,
@@ -54,7 +55,7 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                 ),
               ),
               Align(
-                alignment: Alignment(-0.97,-0.5),
+                alignment: Alignment(-0.97,-0.65),
                 child: Card(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                     elevation: 20,
@@ -63,7 +64,7 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                         child: Text("${widget.data.course_name}",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 20),))),
               ),
               Align(
-                alignment: Alignment(0.9,-0.5),
+                alignment: Alignment(0.9,-0.65),
                 child: Card(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                     elevation: 20,
@@ -73,12 +74,16 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                         child: Text("${widget.data.price} /-",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)))),
               ),
               Align(
-                alignment: Alignment(0,0.2),
+                alignment: Alignment(0,-0.4),
                 child: Description(context,widget.data),
               ),
               Align(
-                alignment: Alignment(0,0.95),
+                alignment: Alignment(0,0.1),
                 child: AskRequest(context,widget.data),
+              ),
+              Align(
+                alignment: Alignment(0,0.99),
+                child: ReviewCard(context,widget.data),
               )
             ],
           ),
@@ -86,6 +91,116 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
       )
       ,
     );
+  }
+
+
+  TextEditingController reviewController = new TextEditingController();
+  var RatingController = 0.0 ;
+  Widget ReviewCard(context,CourseModel data){
+
+    return ScopedModelDescendant<mainModel>(
+        builder: (context, child, mainModel)
+        {
+
+          return
+            Material(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                elevation: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Colors.blue[100],),
+                  padding: EdgeInsets.all(10),
+                  height: 450,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width - 20,
+//                  child: Text("hey"),
+                child: StreamBuilder(
+//                  stream: mainModel.ReviewsStream,
+                  builder: (context, snapshot) {
+//
+//                    QuerySnapshot ReviewData = snapshot.data ;
+//
+//                    print("reviewDATA = "+ReviewData.toString());
+
+                    return Column(
+                            children: <Widget>[
+                              Card(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text("Write Your Valuable Review"),
+                                    SmoothStarRating(
+                                      allowHalfRating: true,
+                                      rating: RatingController,
+                                      starCount: 5,
+                                      spacing: 5,
+                                      onRatingChanged: (val){
+                                        setState(() {
+                                          RatingController = val ;
+                                        });
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10,right: 10),
+                                      child: TextField(
+                                        controller: reviewController,
+                                      ),
+                                    ),
+                                    RaisedButton(
+                                        child: Text("Post Review"),
+                                        onPressed: (){
+                                          print("reviews send masteremail = "+data.master_email.toString());
+                                          setState(() {
+                                            reviewController.text = reviewController.text ;
+                                          });
+                                          print("review sent = "+reviewController.text );
+                                          mainModel.getUser().then((user){
+                                            mainModel.PostReview(data.master_email, data.course_uid, user.email, reviewController.text, RatingController);
+
+                                          }).then((_){
+                                            reviewController.text = "";
+                                          });
+                                          Scaffold.of(context).showSnackBar(
+                                              SnackBar(content: Text("Thank you for the Review"))
+                                          );
+                                        })
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                color: Colors.blue[200],
+                                height: MediaQuery.of(context).size.height/2.25,
+                                child: ListView.builder(
+                                    itemCount: 10,
+                                    itemBuilder: (context,index) {
+                                      return Card(
+                                        elevation: 10,
+                                        margin: EdgeInsets.only(top: 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            SmoothStarRating(
+                                              allowHalfRating: true,
+//                                              rating: ,
+                                              starCount: 5,
+                                              spacing: 5,
+                                            ),
+                                            Text("review"),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+          )
+                )
+            );
+        });
   }
 }
 

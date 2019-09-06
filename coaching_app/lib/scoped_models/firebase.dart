@@ -1,4 +1,5 @@
 import 'package:coaching_app/model/courseModel.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -429,5 +430,37 @@ mixin FirebaseModelMethods on Model {
     var x = DR.delete() ;
     print("Deleted");
   }
+  //****************************************************************************************************************************
+//****************************************************************************************************************************
+  UploadImageForCourse(sampleImage)
+  async {
+    final StorageReference firebaseStorageRef =
+    FirebaseStorage.instance.ref().child(sampleImage.toString());
+    final StorageUploadTask task =
+    firebaseStorageRef.putFile(sampleImage);
+    return await (await task.onComplete).ref.getDownloadURL();
+
+  }
+  //****************************************************************************************************************************
+//****************************************************************************************************************************
+  PostReview(String master_email,String course_uid,String user_email,String comment,var rating)async{
+    print("request sent to = "+"masters/${master_email.toLowerCase()}/courses/${course_uid}/reviews");
+    print("comment = "+comment);
+    var data = {
+      "comment":comment.toString(),
+      "rating":rating
+    };
+    Firestore.instance.collection("masters").document(master_email.toLowerCase()).collection("courses").document(course_uid).collection("reviews").document(user_email.toLowerCase()).setData(data);
+//    print("dr = "+DR.toString());
+    //    CollectionReference CR = Firestore.instance.collection("masters").document(master_email.toLowerCase()).collection("courses").document(course_name.replaceAll(" ", "").toLowerCase()).collection("reviews");
+
+//    CR.document(user_email.toString().toLowerCase()).setData(data);
+
+  }
+
+
+//****************************************************************************************************************************
+//****************************************************************************************************************************
+
 
 }
