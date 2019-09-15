@@ -1,4 +1,5 @@
 import 'package:coaching_app/model/courseModel.dart';
+import 'package:coaching_app/model/reviewModel.dart';
 import 'package:coaching_app/scoped_models/mainModel.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -15,82 +16,113 @@ class CourseFullDetailsPage extends StatefulWidget {
 class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Course"),
-        backgroundColor: Colors.red,
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-        height: MediaQuery.of(context).size.height+500,
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Align(
-                alignment: Alignment(0,-0.99),
-                child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                    elevation: 20,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        alignment: Alignment.topCenter,
-                        width: MediaQuery.of(context).size.width,
-                        height: 60,
-                        child: Text("${widget.data.master_name.toString()}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),))
-                ),
-              ),
-              Align(
-                alignment: Alignment(0,-0.82),
-                child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                    elevation: 20,
-                    child: Container(
-                        alignment: Alignment.topCenter,
-                        width: MediaQuery.of(context).size.width,
-                        height: 45,
-                      padding: EdgeInsets.all(10),
-                        child: Text("Certificate ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
-                    )
-                ),
-              ),
-              Align(
-                alignment: Alignment(-0.97,-0.65),
-                child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                    elevation: 20,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Text("${widget.data.course_name}",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 20),))),
-              ),
-              Align(
-                alignment: Alignment(0.9,-0.65),
-                child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                    elevation: 20,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
+    return ScopedModelDescendant<mainModel>(
+        builder: (context, child, mainModel)
+    {
 
-                        child: Text("${widget.data.price} /-",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)))),
-              ),
-              Align(
-                alignment: Alignment(0,-0.4),
-                child: Description(context,widget.data),
-              ),
-              Align(
-                alignment: Alignment(0,0.1),
-                child: AskRequest(context,widget.data),
-              ),
-              Align(
-                alignment: Alignment(0,0.99),
-                child: ReviewCard(context,widget.data),
-              )
-            ],
+      return
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Course"),
+            backgroundColor: Colors.red,
+            centerTitle: true,
           ),
-    )
-      )
-      ,
-    );
+          body: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height + 600,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment(0, -0.99),
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10))),
+                          elevation: 20,
+                          child: Container(
+                              padding: EdgeInsets.all(10),
+                              alignment: Alignment.topCenter,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              height: 60,
+                              child: Text(
+                                "${widget.data.master_name.toString()}",
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 30),))
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment(0, -0.85),
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(20))),
+                          elevation: 20,
+                          child: Container(
+                              alignment: Alignment.topCenter,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              height: 45,
+                              padding: EdgeInsets.all(10),
+                              child: Text("Certificate ", style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),)
+                          )
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment(-0.97, -0.75),
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(20))),
+                          elevation: 20,
+                          child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Text("${widget.data.course_name}",
+                                style: TextStyle(fontWeight: FontWeight.w400,
+                                    fontSize: 20),))),
+                    ),
+                    Align(
+                      alignment: Alignment(0.9, -0.75),
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(20))),
+                          elevation: 20,
+                          child: Container(
+                              padding: EdgeInsets.all(10),
+
+                              child: Text("${widget.data.price} /-",
+                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                      fontSize: 20)))),
+                    ),
+                    Align(
+                      alignment: Alignment(0, -0.5),
+                      child: Description(context, widget.data),
+                    ),
+                    Align(
+                      alignment: Alignment(0, -0.05),
+                      child: AskRequest(context, widget.data),
+                    ),
+                    Align(
+                      alignment: Alignment(0, 0.99),
+                      child: ReviewCard(context, widget.data),
+                    )
+                  ],
+                ),
+              )
+          )
+          ,
+        );
+    });
   }
 
 
@@ -101,6 +133,11 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
     return ScopedModelDescendant<mainModel>(
         builder: (context, child, mainModel)
         {
+//          List<Review> ReviewList = [] ;
+
+          mainModel.GetReviews(
+              data.master_email,data.course_uid,);
+
 
           return
             Material(
@@ -112,7 +149,7 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     color: Colors.blue[100],),
                   padding: EdgeInsets.all(10),
-                  height: 450,
+                  height: 550,
                   width: MediaQuery
                       .of(context)
                       .size
@@ -128,6 +165,27 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
 
                     return Column(
                             children: <Widget>[
+                              Card(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+
+                                  children: <Widget>[
+                                    Text("Average Rating"),
+                                      SmoothStarRating(
+                                      allowHalfRating: false,
+                                      rating: mainModel.averageRating,
+                                      starCount: 5,
+                                      spacing: 5,
+//                                      onRatingChanged: (val){
+//                                        setState(() {
+//                                          RatingController = val ;
+//                                        });
+//                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+
                               Card(
                                 child: Column(
                                   children: <Widget>[
@@ -174,8 +232,9 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                                 color: Colors.blue[200],
                                 height: MediaQuery.of(context).size.height/2.25,
                                 child: ListView.builder(
-                                    itemCount: 10,
+                                    itemCount:mainModel.ReviewList.length,
                                     itemBuilder: (context,index) {
+//                                      print("LEN = "+mainModel.ReviewList.length.toString());
                                       return Card(
                                         elevation: 10,
                                         margin: EdgeInsets.only(top: 10),
@@ -183,11 +242,11 @@ class _CourseFullDetailsPageState extends State<CourseFullDetailsPage> {
                                           children: <Widget>[
                                             SmoothStarRating(
                                               allowHalfRating: true,
-//                                              rating: ,
+                                              rating: double.parse( mainModel.ReviewList[index].rating.toString()),
                                               starCount: 5,
                                               spacing: 5,
                                             ),
-                                            Text("review"),
+                                            Text(mainModel.ReviewList[index].comment.toString()),
                                           ],
                                         ),
                                       );

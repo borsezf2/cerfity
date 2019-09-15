@@ -1,4 +1,5 @@
 import 'package:coaching_app/model/courseModel.dart';
+import 'package:coaching_app/model/reviewModel.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -461,6 +462,37 @@ mixin FirebaseModelMethods on Model {
 
 //****************************************************************************************************************************
 //****************************************************************************************************************************
+  List<Review> ReviewList = [] ;
+  int pass3 = 0 ;
+  double averageRating = 2.5 ;
+  GetReviews(String master_email,String course_uid)async{
+//    ReviewList = [] ;
+//    print("request asked from = "+"masters/${master_email.toLowerCase()}/courses/${course_uid}/reviews");
+    var temp ;
+    if ( pass3%1000==0) {
+      pass3++ ;
+      QuerySnapshot docs = await Firestore.instance.collection("masters")
+          .document(master_email.toLowerCase()).collection("courses").document(
+          course_uid).collection("reviews")
+          .getDocuments();
 
+      for (DocumentSnapshot docin in docs.documents) {
+        ReviewList.add(Review.fromFireStore(docin));
+      }
+//      print("Reviews Length = " + ReviewList.length.toString());
+       temp = ReviewList;
+
+       double sum = 0 ;
+       for (Review datain in ReviewList){
+         sum += datain.rating ;
+       }
+      averageRating = sum/ReviewList.length ;
+       print("AVERAGE = "+averageRating.toString());
+
+    }
+    notifyListeners();
+
+    return temp ;
+  }
 
 }
